@@ -9,8 +9,6 @@ async function addProduct(req, res) {
 
 async function getAllProducts(req, res) {
   const allProducts = await productService.getAllProducts();
-  console.log(allProducts);
-
   res.status(200).json({ products: allProducts });
 }
 
@@ -21,4 +19,18 @@ async function getProductById(req, res) {
   res.status(200).json(result);
 }
 
-module.exports = { addProduct, getAllProducts, getProductById };
+async function updateProduct(req, res) {
+  const { id } = req.params;
+  const { name, quantity } = req.body;
+  const updatedProduct = await productService.updateProduct(id, name, quantity);
+  // console.log(updatedProduct)
+  if (updatedProduct.err) return res.status(422).json(updatedProduct);
+  res.status(200).json(updatedProduct);
+}
+
+module.exports = {
+  addProduct,
+  getAllProducts,
+  getProductById,
+  updateProduct,
+};

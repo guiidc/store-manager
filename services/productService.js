@@ -64,4 +64,17 @@ async function getProductById(id) {
   return product;
 }
 
-module.exports = { addProduct, getAllProducts, getProductById };
+async function updateProduct(id, name, quantity) {
+  if (!validateName(name)) return nameError;
+  if (!validateQuantityType(quantity)) return quantityTypeError;
+  if (!validateQuantityLength(quantity)) return quantityLengthError;
+  const updatedProduct = await productModel.updateProduct(id, name, quantity);
+  return updatedProduct;
+}
+
+module.exports = {
+  addProduct,
+  getAllProducts,
+  getProductById,
+  updateProduct,
+};

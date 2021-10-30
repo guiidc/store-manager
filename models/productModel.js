@@ -25,4 +25,18 @@ async function getAllProducts() {
   return products;
 }
 
-module.exports = { addProduct, getProductById, getProductByName, getAllProducts };
+async function updateProduct(id, name, quantity) {
+  if (!ObjectId.isValid(id)) return null;
+  await getConnection()
+  .then((db) => db.collection('products')
+  .updateOne({ _id: ObjectId(id) }, { $set: { name, quantity } }));
+  return { _id: id, name, quantity };
+}
+
+module.exports = { 
+  addProduct,
+  getProductById,
+  getProductByName,
+  getAllProducts,
+  updateProduct,
+};
