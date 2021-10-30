@@ -24,6 +24,12 @@ const quantityTypeError = {
     message: '"quantity" must be a number',
   },
 };
+const wrongIdError = {
+  err: {
+    code: 'invalid_data',
+    message: 'Wrong id format',
+  },
+};
 
 function validateName(name) {
   if (typeof name !== 'string' || name.length < 6) return false;
@@ -38,11 +44,6 @@ function validateQuantityLength(quantity) {
   return true;
 }
 
-// async function alreadyExist(name) {
-//   if (await productModel.getProductByName(name)) return alreadyExistError;
-//   return false;
-// }
-
 async function addProduct({ name, quantity }) {
   if (!validateName(name)) return nameError;
   if (!validateQuantityType(quantity)) return quantityTypeError;
@@ -52,4 +53,15 @@ async function addProduct({ name, quantity }) {
   return product;
 }
 
-module.exports = { addProduct };
+async function getAllProducts() {
+  const products = await productModel.getAllProducts();
+  return products;
+}
+
+async function getProductById(id) {
+  const product = await productModel.getProductById(id);
+  if (!product) return wrongIdError;
+  return product;
+}
+
+module.exports = { addProduct, getAllProducts, getProductById };

@@ -19,4 +19,10 @@ async function getProductByName(name) {
   return product;
 }
 
-module.exports = { addProduct, getProductById, getProductByName };
+async function getAllProducts() {
+  const products = await getConnection()
+  .then((db) => db.collection('products').find().toArray());
+  return products;
+}
+
+module.exports = { addProduct, getProductById, getProductByName, getAllProducts };

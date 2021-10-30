@@ -14,6 +14,6 @@ app.post('/products', productController.addProduct);
 
 app.listen(3000, () => console.log('Servidor iniciado na porta 3000'));
 
-app.get('/products', (req, res) => {
-  res.send('servidor iniciado de boa');
-});
+app.get('/products', productController.getAllProducts);
+
+app.get('/products/:id', productController.getProductById);
