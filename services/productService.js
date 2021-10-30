@@ -72,9 +72,16 @@ async function updateProduct(id, name, quantity) {
   return updatedProduct;
 }
 
+async function removeProduct(id) {
+  const removedProduct = await productModel.removeProduct(id);
+  if (!removedProduct) return wrongIdError;
+  return removedProduct;
+}
+
 module.exports = {
   addProduct,
   getAllProducts,
   getProductById,
   updateProduct,
+  removeProduct,
 };

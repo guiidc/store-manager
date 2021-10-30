@@ -23,9 +23,15 @@ async function updateProduct(req, res) {
   const { id } = req.params;
   const { name, quantity } = req.body;
   const updatedProduct = await productService.updateProduct(id, name, quantity);
-  // console.log(updatedProduct)
   if (updatedProduct.err) return res.status(422).json(updatedProduct);
   res.status(200).json(updatedProduct);
+}
+
+async function removeProduct(req, res) {
+  const { id } = req.params;
+  const removedProduct = await productService.removeProduct(id);
+  if (removedProduct.err) return res.status(422).json(removedProduct);
+  res.status(200).json(removedProduct);
 }
 
 module.exports = {
@@ -33,4 +39,5 @@ module.exports = {
   getAllProducts,
   getProductById,
   updateProduct,
+  removeProduct,
 };
