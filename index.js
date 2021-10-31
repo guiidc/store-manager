@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 // internal imports
 const productController = require('./controllers/productController');
+const salesController = require('./controllers/salesController');
 
 const app = express();
 
@@ -21,3 +22,5 @@ app.get('/products/:id', productController.getProductById);
 app.put('/products/:id', productController.updateProduct);
 
 app.delete('/products/:id', productController.removeProduct);
+
+app.post('/sales', salesController.addSales);

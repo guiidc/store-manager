@@ -1,7 +1,7 @@
 const frisby = require('frisby');
 const { MongoClient } = require('mongodb');
 
-const mongoDbUrl = 'mongodb://mongodb:27017/StoreManager';
+const mongoDbUrl = 'mongodb://localhost:27017';
 const url = 'http://localhost:3000';
 const invalidId = 99999;
 
@@ -39,7 +39,7 @@ describe('5 - Crie um endpoint para cadastrar vendas', () => {
     await connection.close();
   });
 
-  it.skip('Será validado que não é possível cadastrar compras com quantidade menor que zero', async () => {
+  it('Será validado que não é possível cadastrar compras com quantidade menor que zero', async () => {
     let result;
     let resultProductId;
 
@@ -67,7 +67,7 @@ describe('5 - Crie um endpoint para cadastrar vendas', () => {
       });
   });
 
-  it.skip('Será validado que não é possível cadastrar compras com quantidade igual a zero', async () => {
+  it('Será validado que não é possível cadastrar compras com quantidade igual a zero', async () => {
     let result;
     let resultProductId;
 
@@ -95,7 +95,7 @@ describe('5 - Crie um endpoint para cadastrar vendas', () => {
       });
   });
 
-  it.skip('Será validado que não é possível cadastrar compras com uma string no campo quantidade', async () => {
+  it('Será validado que não é possível cadastrar compras com uma string no campo quantidade', async () => {
     let result;
     let resultProductId;
 
@@ -123,7 +123,7 @@ describe('5 - Crie um endpoint para cadastrar vendas', () => {
       });
   });
 
-  it.skip('Será validado que é possível criar uma compra com sucesso', async () => {
+  it('Será validado que é possível criar uma compra com sucesso', async () => {
     let result;
     let resultProductId;
 
@@ -154,7 +154,7 @@ describe('5 - Crie um endpoint para cadastrar vendas', () => {
       });
   });
 
-  it.skip('Será validado que é possível criar várias compras com sucesso', async () => {
+  it('Será validado que é possível criar várias compras com sucesso', async () => {
     let result;
     let resultProductId;
 
