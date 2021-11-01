@@ -9,7 +9,12 @@ const notFoundError = {
 
 async function addSales(req, res) {
   const insertedSales = await salesService.addSales(req.body);
-  if (insertedSales.err) return res.status(422).json(insertedSales);
+  if (insertedSales.err && insertedSales.err.code === 'stock_problem') {
+    return res.status(404).json(insertedSales);
+  }
+  if (insertedSales.err) {
+    return res.status(422).json(insertedSales);
+  }
   res.status(200).json(insertedSales);
 }
 
