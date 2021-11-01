@@ -6,6 +6,12 @@ const quantityError = {
     message: 'Wrong product ID or invalid quantity',
   },
 };
+const idError = {
+  err: {
+    code: 'invalid_data',
+    message: 'Wrong sale ID format',
+  },
+};
 
 function validateQuantityLength(sales) {
   const quantitys = sales.filter(({ quantity }) => quantity < 1);
@@ -34,8 +40,22 @@ async function getSaleById(id) {
  return salesModel.getSaleById(id);
 }
 
+async function updateSale(id, sale) {
+  if (!validateQuantityLength(sale)) return quantityError;
+  if (!validateQuantityType(sale)) return quantityError;
+  return salesModel.updateSale(id, sale);
+}
+
+async function deleteSale(id) {
+  const deletedSale = await salesModel.deleteSale(id);
+  if (!deletedSale) return idError;
+  return deletedSale;
+}
+
 module.exports = {
   addSales,
   getAllSales,
   getSaleById,
+  updateSale,
+  deleteSale,
 };
