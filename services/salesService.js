@@ -26,4 +26,16 @@ async function addSales(sales) {
   return insertedSales;
 }
 
-module.exports = { addSales };
+async function getAllSales() {
+  return salesModel.getAllSales();
+}
+
+async function getSaleById(id) {
+ return salesModel.getSaleById(id);
+}
+
+module.exports = {
+  addSales,
+  getAllSales,
+  getSaleById,
+};
