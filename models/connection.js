@@ -1,13 +1,12 @@
 const { MongoClient } = require('mongodb');
 
 const MONGO_DB_URL = 'mongodb://localhost:27017/StoreManager';
+const DB_NAME = 'StoreManager';
 
 const OPTIONS = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
-
-const DB_NAME = 'StoreManager';
 
 let db = null;
 
