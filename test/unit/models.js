@@ -22,7 +22,7 @@ describe('Testando model de PRODUTOS', () => {
     mongoConnection.getConnection.restore();
   })
 
-  describe('Ao adicionar um novo produto', () => {
+  describe('1 - Ao adicionar um novo produto', () => {
     it('Deve retornar um objeto', async() => {
       const newProduct = await productModel.addProduct('Mouse sem fio', 25);
       expect(newProduct).to.be.an('object')
@@ -34,7 +34,7 @@ describe('Testando model de PRODUTOS', () => {
     })
   })
 
-  describe('Ao buscar um produto pelo Id', async () => {
+  describe('2 - Ao buscar um produto pelo Id', async () => {
     let id;
     before(async () => {
       const newProduct = await productModel.addProduct('Mouse sem fio', 25);
@@ -57,9 +57,13 @@ describe('Testando model de PRODUTOS', () => {
     })
   })
 
-  describe('Ao procurar um produto pelo nome', () => {
+  describe('3 - Ao procurar um produto pelo nome', () => {
+    it('Deve retornar um array vazio, caso não encontre o nome procurado', async () => {
+      const product = await productModel.getProductByName('o inomeável produto');
+      expect(product).to.be.null;
+    })
     it('Deve retornar um objeto', async () => {
-      const product = await productModel.getProductByName('Mouse sem fio', 25);
+      const product = await productModel.getProductByName('Mouse sem fio');
       expect(product).to.be.an('object')
     });
 
@@ -69,7 +73,7 @@ describe('Testando model de PRODUTOS', () => {
     });
   })
 
-  describe('Ao buscar a lista de todos os produtos', () => {
+  describe('4 - Ao buscar a lista de todos os produtos', () => {
 
     it('Os produtos encontrados deverão estar contidos em um array', async() => {
       const productsList = await productModel.getAllProducts();
@@ -83,7 +87,7 @@ describe('Testando model de PRODUTOS', () => {
     })
   });
 
-  describe('Ao tentar atualizar um produto', () => {
+  describe('5 - Ao tentar atualizar um produto', () => {
     let id;
     before(async () => {
       const newProduct = await connectionMock.collection('products').insertOne({name: 'notebook', quantity: 15});
@@ -100,7 +104,7 @@ describe('Testando model de PRODUTOS', () => {
     })
   })
 
-  describe('Ao remove um produto da lista', () => {
+  describe('6 - Ao remove um produto da lista', () => {
     let id;
     before(async () => {
       await connectionMock.collection('products').drop();
@@ -137,7 +141,7 @@ describe('Testa model de VENDAS', () => {
     mongoConnection.getConnection.restore();
   })
 
-  describe('Ao adicionar uma nova venda', () => {
+  describe('7 - Ao adicionar uma nova venda', () => {
     it('Deve retornar um objeto com as vendas listadas', async () => {
       const id = await connectionMock.collection('products').insertOne(productExample)._id;
       const sale = await salesModel.addSales([{ productId: id, quantity: 5}]);
@@ -156,6 +160,7 @@ describe('Testa model de VENDAS', () => {
       await connectionMock.collection('products').drop();
       await connectionMock.collection('sales').drop();
     })
+
     it('Quando a venda não é encontrada deve retornar um null', async () => {
       const sale = await salesModel.getSaleById('123');
       expect(sale).to.be.null;
@@ -167,11 +172,10 @@ describe('Testa model de VENDAS', () => {
       const selectedSale = await salesModel.getSaleById(saleId);
       expect(selectedSale).to.be.an('object');
       expect(selectedSale).to.include.all.keys('_id', 'itensSold')
-
     })
   })
 
-  describe('Ao buscar todas as vendas', () => {
+  describe('8 - Ao buscar todas as vendas', () => {
     before(async() => {
       await connectionMock.collection('products').drop();
       await connectionMock.collection('sales').drop();
@@ -194,7 +198,7 @@ describe('Testa model de VENDAS', () => {
     })
   })
 
-  describe('Ao atualizar uma venda', () => {
+  describe('9 - Ao atualizar uma venda', () => {
     before( async () => {
       await connectionMock.collection('products').drop();
       await connectionMock.collection('sales').drop();
@@ -213,7 +217,7 @@ describe('Testa model de VENDAS', () => {
     });
   })
 
-  describe('Ao deletar uma venda', () => {
+  describe('10 - Ao deletar uma venda', () => {
     before( async () => {
       await connectionMock.collection('products').drop();
       await connectionMock.collection('sales').drop();
